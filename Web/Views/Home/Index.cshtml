@@ -15,18 +15,39 @@
             <span class="hide" id="Indicator"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
             <span class="hide btn btn-success" id="IndicatorOk"><i class="fa fa-check fa-lg"></i></span>
             <span class="hide btn btn-danger" id="IndicatorError"><i class="fa fa-times fa-lg"></i></span>
+            <span class="hide" id="IndicatorLabel"></span>
         </form>
     </div>
 </div>
 
 @section scripts{
     <script>
-        (function($) {
+        (function ($) {
+            var resetIndicators = function() {
+                $('#Indicator').addClass('hide');
+                $('#IndicatorOk').addClass('hide');
+                $('#IndicatorError').addClass('hide');
+                $('#IndicatorLabel').addClass('hide');
+            }
+
             $('#Username').on('blur',
                 function () {
+                    resetIndicators();
                     var username = $(this).val();
                     if (username.length > 0) {
                         $('#Indicator').removeClass('hide');
+                        $.ajax({
+                            url: '/api/verifyusername',
+                            method: 'GET',
+                            data: { username: username }
+                        }).done(function(response) {
+                            $('#Indicator').addClass('hide');
+                            var indicatorId = response.IsAvailable ? 'Ok' : 'Error';
+                            var indicatorText = response.IsAvailable ? ' is avalable!' : ' has been taken, sorry!';
+                            $('#Indicator' + indicatorId).removeClass('hide');
+                            $('#IndicatorLabel').removeClass('hide');
+                            $('#IndicatorLabel').html(response.OriginalUsername + indicatorText);
+                        });
                     }
                 });
         }(jQuery))
