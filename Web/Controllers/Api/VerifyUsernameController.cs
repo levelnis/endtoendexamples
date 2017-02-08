@@ -2,7 +2,7 @@
 
 namespace Levelnis.Learning.EndToEndExamples.Web.Controllers.Api
 {
-    public class UsernameController : ApiController
+    public class VerifyUsernameController : ApiController
     {
         public IHttpActionResult Get()
         {

@@ -6,13 +6,9 @@
     {
         public static void Register(HttpConfiguration config)
         {
-            config.MapHttpAttributeRoutes();
+            config.Formatters.Add(new BrowserJsonFormatter());
 
-            config.Routes.MapHttpRoute(
-                "VerifyUsername", 
-                "api/verify-duplicate-username",
-                new {controller = "Username", action = "Get"}
-            );
+            config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 "DefaultApi",
