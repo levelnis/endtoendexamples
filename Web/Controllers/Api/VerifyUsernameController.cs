@@ -4,9 +4,9 @@ namespace Levelnis.Learning.EndToEndExamples.Web.Controllers.Api
 {
     public class VerifyUsernameController : ApiController
     {
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(string username)
         {
-            return Ok("OK");
+            return Ok(username);
         }
     }
 }
